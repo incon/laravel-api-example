@@ -28,7 +28,7 @@ class Device extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['id', 'created_at', 'updated_at'];
 
     /**
      * The accessors to append to the model's array form.
