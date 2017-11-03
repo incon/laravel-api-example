@@ -1,8 +1,13 @@
-const parseUTC = date => new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()));
+import parse from 'date-fns/format'
+import format from 'date-fns/format'
 
 $(function () {
-    if ($('#devices-component')) {
 
+    if ($('#devices-component')) {
+        updateDevices();
+    }
+
+    function updateDevices() {
         let loadingElm = $('.loading');
         let emptyElm = $('.empty');
         let devicesElm = $('.devices');
@@ -18,12 +23,13 @@ $(function () {
             }
 
             let devices = response.reduce((devices, device) => {
+                let UTCDate = format(parse(device.checked_in_at), 'YYYY-MM-DDTHH:mm:ss-00:00');
                 return devices +
                     `<div class="device-item status-${device.status.toLowerCase()}"
                           title="${device.status.toLowerCase()}">
                         <div class="text-smaller">${device.uuid}</div>
                         <div class="text-larger"}>${device.label}</div>
-                        <div>${parseUTC(new Date(device.checked_in_at))}</div>
+                        <div>${(new Date(UTCDate))}</div>
                     </div>`;
             }, '');
 
@@ -35,7 +41,8 @@ $(function () {
 
         }).always(function (response) {
             loadingElm.hide();
+            setTimeout(updateDevices, 10000);
+
         })
     }
-
 });
