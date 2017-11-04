@@ -23,6 +23,7 @@ $(function () {
             type: 'GET'
         }).done(function (response) {
             if (response.length === 0) {
+                devicesElm.hide();
                 emptyElm.show();
                 return;
             }
