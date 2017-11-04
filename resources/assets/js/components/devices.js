@@ -13,6 +13,11 @@ $(function () {
         let devicesElm = $('.devices');
         let errorElm = $('.error');
 
+        if (errorElm.is(":visible")) {
+            errorElm.hide();
+            loadingElm.show();
+        }
+
         $.ajax({
             url: '/api/devices',
             type: 'GET'
@@ -37,6 +42,7 @@ $(function () {
             devicesElm.show();
 
         }).fail(function (response) {
+            devicesElm.hide();
             errorElm.show();
 
         }).always(function (response) {
